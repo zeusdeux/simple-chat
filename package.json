@@ -1,0 +1,40 @@
+{
+  "name": "simple-chat",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple chat with multiple backends supporting REST endpoints, GraphQL & Falcor",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node --harmony_arrow_functions --harmony_rest_parameters bin/restServer",
+    "dev": "nodemon --harmony_modules --harmony_arrow_functions --harmony_rest_parameters bin/restServer"
+  },
+  "keywords": [
+    "chat",
+    "falcor",
+    "graphql",
+    "relay",
+    "react",
+    "jsongraph"
+  ],
+  "author": "Mudit Ameta",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "debug": "^2.2.0",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "express-session": "^1.11.3",
+    "isomorphic-fetch": "^2.2.0",
+    "morgan": "^1.6.1",
+    "react": "^0.14.0",
+    "socket.io": "^1.3.7"
+  },
+  "devDependencies": {
+    "babelify": "^6.4.0",
+    "browserify": "^11.2.0",
+    "clean-css": "^3.4.6",
+    "envify": "^3.4.0",
+    "uglify-js": "^2.5.0"
+  }
+}
