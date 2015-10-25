@@ -246,8 +246,7 @@ const deleteRoom = (req, res, next) => {
 
       err403.status = 403
 
-      if (req.xhr) res.sendStatus(err403.status)
-      else throw err403
+      throw err403
     }
   }
   catch(e) {

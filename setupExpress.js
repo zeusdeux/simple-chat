@@ -76,21 +76,27 @@ module.exports = (routes) => {
 
   // setup prod and dev error handler
   if ('production' === env || 'prod' === env) {
-    app.use((err, _, res) => {
+    app.use((err, req, res, _) => {
       res.status(err.status || 500)
-      res.render('error', {
-        message: 'Something went wrong! :(',
-        stack: null // don't leak stacktrace to user in prod
-      })
+      if (req.xhr) res.send()
+      else {
+        res.render('error', {
+          message: 'Something went wrong! :(',
+          stack: null // don't leak stacktrace to user in prod
+        })
+      }
     })
   }
   else {
-    app.use((err, _, res) => {
+    app.use((err, req, res, _) => {
       res.status(err.status || 500)
-      res.render('error', {
-        message: err.message || 'Broken bruv! :|',
-        stack: err.stack
-      })
+      if (req.xhr) res.send()
+      else {
+        res.render('error', {
+          message: err.message || 'Broken bruv! :|',
+          stack: err.stack.split('\n').join('<br />')
+        })
+      }
     })
   }
   return app
