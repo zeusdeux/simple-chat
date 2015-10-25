@@ -16,7 +16,7 @@ const Messages = require('../models/messages')
 
 const validateUser = (req, res, next) => {
   /*
-   * If a non-user tries to create a room, 401 out
+   * If a non-user tries to do stuff like create a room, etc, 401 out
    */
 
   if (req.session.userId && Users.isValid(req.session.userId)) return next()
