@@ -247,13 +247,6 @@ const getCreatedBy = (id) => {
 }
 
 
-/*
- * TODO:
- * 1. Add support for tracking which user created the room
- * 2. Add support for room deletion by user who created it
- */
-
-
 module.exports = {
   assert,
   isValid,
