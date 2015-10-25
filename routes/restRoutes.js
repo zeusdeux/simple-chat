@@ -44,10 +44,10 @@ router.get('/', (req, res, next) => {
     const allRoomsObjs = Rooms.getAll().map(room => {
       const temp = Object.create(null)
 
-      temp.id        = room.id
-      temp.name      = room.name
-      temp.userCount = room.users.length
-      temp.createdBy = Users.getNickname(room.createdBy)
+      temp.id           = room.id
+      temp.name         = room.name
+      temp.userCount    = room.users.length
+      temp.createdBy    = Users.getNickname(room.createdBy)
       temp.createdByYou = room.createdBy === userId
 
       return temp

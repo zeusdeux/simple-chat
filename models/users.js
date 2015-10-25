@@ -91,7 +91,11 @@ const isValid = (id) => {
 const setNickname = (id, nickname) => {
   const user = _get(id)
 
-  user.nickname = nickname
+  // check if another user with new nickname exists
+  const userWithNicknameExists = !!getAll().filter(user => user.nickname === nickname).length
+
+  if (userWithNicknameExists) throw new Error('User with nickname exists')
+  else user.nickname = nickname
 }
 
 
