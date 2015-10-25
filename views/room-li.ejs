@@ -1,5 +1,15 @@
 <li>
   <span class="room-name"><a href="/room/<%= room.id %>"><%= room.name %></a></span>
+
+  <span>
+    Created by <% if (room.createdByYou) { %> You <% } else { %> <%= room.createdBy %><% } %>
+  </span>
+
   <%# TODO: Do the pluralization of person/people properly %>
   <span class="user-count"><%= room.userCount %> people</span>
+
+  <% if (room.createdByYou) { %>
+    <span> <a href="/room/<%= room.id %>/delete">delete</a></span>
+  <% } %>
+
 </li>

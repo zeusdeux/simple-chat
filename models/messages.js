@@ -3,7 +3,7 @@
 // console.log('starting loading messages model')
 
 const messages = require('../data/messages')
-
+const util = require('../util')
 
 /*
  * Schema
@@ -29,7 +29,7 @@ const messages = require('../data/messages')
 
 const _createMessageObj = (content, inRoom, createdAt, fromUser, to) => {
   let message = Object.create(null)
-  const id    = Object.keys(messages).length
+  const id    = Object.keys(messages).length + 1 // 1 indexed ids
 
   Rooms.assert(inRoom)
   Users.assert(fromUser)
@@ -52,7 +52,10 @@ const _createMessageObj = (content, inRoom, createdAt, fromUser, to) => {
 const _get = (id) => {
   const msg = messages[id]
 
-  if ('string' === typeof msg && !msg) throw new Error('Message with id ' + id + ' not found')
+  if ('string' === typeof msg && !msg) {
+    if (util.isProd()) throw new Error('Message not found')
+    else throw new Error('Message with id ' + id + ' not found')
+  }
   return msg
 }
 
@@ -117,11 +120,22 @@ const get = (id) => {
   return msgObj
 }
 
+
+/*
+ * Delete message from messages
+ */
+
+const deleteMessage = (id) => {
+  delete messages[id]
+}
+
+
 module.exports = {
   get: get,
   assert,
   isValid,
-  create
+  create,
+  deleteMessage
 }
 
 const Users    = require('./users')

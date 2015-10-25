@@ -2,8 +2,8 @@
 
 // console.log('starting loading users model')
 
-let users   = require('../data/users')
-
+let users  = require('../data/users')
+const util = require('../util')
 
 /*
  * Schema
@@ -24,9 +24,9 @@ let users   = require('../data/users')
  * Create a user object with shape describe above
  */
 
-const _createUserObj = (nickname, ...roomIds) => {
+const _createUserObj = (createdOn, nickname, ...roomIds) => {
   let user = Object.create(null)
-  let id   = Object.keys(users).length
+  let id   = Object.keys(users).length + 1 // 1 indexed ids
 
   /*
    * Filter invalid room ids
@@ -36,7 +36,7 @@ const _createUserObj = (nickname, ...roomIds) => {
 
   user.nickname = nickname || 'unknownPerson' + Date.now()
   user.rooms = roomIds
-  user.createdOn = Date.now()
+  user.createdOn = createdOn || Date.now()
   user.lastAccessed = user.createdOn
 
   return { id, user }
@@ -57,7 +57,10 @@ const _set = (id, user) => users[id] = user
 const _get = (id) => {
   const user = users[id]
 
-  if (!user) throw new Error('User for id ' + id + ' not found')
+  if (!user) {
+    if (util.isProd()) throw new Error('User not found')
+    else throw new Error('User for id ' + id + ' not found')
+  }
   return user
 }
 
@@ -165,8 +168,8 @@ const getLastAccessed = (id) => {
  * Create user
  */
 
-const create = (nickname) => {
-  let userObj        = _createUserObj(nickname)
+const create = (createdOn, nickname) => {
+  let userObj        = _createUserObj(createdOn, nickname)
   const existingUser = getUserByNickname(nickname)
 
   if (existingUser) return existingUser.id
@@ -207,6 +210,7 @@ const getAll = () => {
 
   return allUsers
 }
+
 
 module.exports = {
   assert,

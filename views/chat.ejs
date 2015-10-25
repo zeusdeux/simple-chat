@@ -8,8 +8,12 @@
   </head>
   <body>
     <main>
+      <header>
+        <h3><%= roomName %></h3>
+      </header>
       <nav>
-        <a href="">Back</a>
+        <a href="/room/<%= roomId %>/leave">Leave room</a>
+        <a href="../">Back</a>
       </nav>
       <section class="chat-box-container">
         <div class="messages">
@@ -21,7 +25,6 @@
         </div>
         <div class="input">
           <form action="/room/<%= roomId %>" method="post" id="sendMessageForm">
-            <input name="userid" type="hidden" value="<%= userId %>"/>
             <input name="message" type="text" value="" placeholder="Enter message"/>
             <button type="submit" form="sendMessageForm">Send</button>
           </form>

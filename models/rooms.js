@@ -2,8 +2,8 @@
 
 // console.log('starting loading rooms model')
 
-let rooms      = require('../data/rooms')
-
+let rooms = require('../data/rooms')
+const util = require('../util')
 
 /*
  * Schema
@@ -26,7 +26,7 @@ let rooms      = require('../data/rooms')
 
 const _createRoomObj = (name, createdByUserId) => {
   let room = Object.create(null)
-  let id   = Object.keys(rooms).length
+  let id   = Object.keys(rooms).length + 1 // 1 indexed ids
 
   /*
    * Assert that a legit user is tryna create this room
@@ -58,7 +58,8 @@ const _get = (id) => {
   const room = rooms[id]
 
   if (room) return room
-  throw new Error('Room for id ' + id + ' not found')
+  if (util.isProd()) throw new Error('Room does not exist')
+  else throw new Error('Room for id ' + id + ' not found')
 }
 
 
@@ -175,17 +176,38 @@ const create = (name, createdByUserId) => {
 
 
 /*
+ * Delete a room given by id
+ */
+
+const deleteRoom = (id) => {
+  const room = _get(id)
+
+  // remove this room from list of rooms for the users in this room
+  room.users.forEach(userId => Users.removeRoom(userId, id))
+
+  // TODO: purge messages
+  // room.messages.forEach(messageId => Messages.deleteMessage(messageId))
+
+  delete rooms[id]
+}
+
+
+/*
  * Get a list of all rooms and users in 'em
  */
 
 const getAll = () => {
   let allRooms = []
 
-  Object.keys(rooms).forEach(roomId => allRooms.push(_get(roomId)))
+  Object.keys(rooms).forEach(roomId => {
+    let temp = Object.create(_get(roomId))
+
+    temp.id = roomId
+    allRooms.push(temp)
+  })
 
   return allRooms
 }
-
 
 
 /*
@@ -214,6 +236,17 @@ const getMessages = (id) => {
 
 
 /*
+ * Get user id of the user who created the room
+ */
+
+const getCreatedBy = (id) => {
+  const room = _get(id)
+
+  return room.createdBy
+}
+
+
+/*
  * TODO:
  * 1. Add support for tracking which user created the room
  * 2. Add support for room deletion by user who created it
@@ -231,6 +264,8 @@ module.exports = {
   addMessage,
   getMessages,
   create,
+  deleteRoom,
+  getCreatedBy,
   getAll
 }
 

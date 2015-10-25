@@ -8,7 +8,7 @@
   <body>
     <main>
       <header>
-        <h3><%= greeting %></h3>
+        <h3>Hi <%= userNick %>!</h3>
       </header>
       <section class="rooms-list-container">
         <% if (rooms.length) { %>
@@ -27,6 +27,13 @@
         <form action="/room/create" method="post" id="createRoomForm">
           <input name="roomname" type="text" value="" placeholder="Enter new room name" />
           <button form="createRoomForm" type="submit">Create!</button>
+        </form>
+      </section>
+      <section class="change-nickname-container">
+        <p>Change nickname</p>
+        <form action="/user/nickname" method="post" id="changeNicknameForm">
+          <input name="nickname" type="text" value="" placeholder="Enter new nickname" />
+          <button form="changeNicknameForm" type="submit">Update!</button>
         </form>
       </section>
     </main>
