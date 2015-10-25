@@ -201,7 +201,7 @@ const getAll = () => {
   let allRooms = []
 
   Object.keys(rooms).forEach(roomId => {
-    let temp = Object.create(_get(roomId))
+    let temp = Object.assign(Object.create(null), _get(roomId))
 
     temp.id = roomId
     allRooms.push(temp)
