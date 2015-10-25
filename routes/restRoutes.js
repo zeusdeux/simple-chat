@@ -21,7 +21,7 @@ const validateUser = (req, res, next) => {
 
   if (req.session.userId && Users.isValid(req.session.userId)) return next()
   else {
-    let err401 = new Error('Unauthorized')
+    let err401 = new Error('Unauthorized. Visit / once to setup user.')
 
     err401.status = 401
     return next(err401)
@@ -226,7 +226,7 @@ router.get('/room/:id/leave', validateUser, (req, res, next) => {
 
 
 /*
- * GET Delete a room
+ * GET/DELETE Delete a room
  */
 
 const deleteRoom = (req, res, next) => {
@@ -258,5 +258,6 @@ router.route('/room/:id/delete')
   .all(validateUser)
   .delete(deleteRoom)
   .get(deleteRoom)
+
 
 module.exports = router
