@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Simple-chat: Error</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="error-container">
+      <h3 class="error-message"><%= status %>: <%= message %></h3>
+      <% if(stack) { %>
+        <code><%- stack %></code>
+      <%  } %>
+      <p>
+        <a href="/">Go home</a>
+      </p>
+    </section>
+  </body>
+</html>

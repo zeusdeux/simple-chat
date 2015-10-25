@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Simple-chat</title>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h3>Hi <%= userNick %>!</h3>
+      </header>
+      <section class="rooms-list-container">
+        <% if (rooms.length) { %>
+          <p>List of rooms</p>
+          <ul>
+            <% rooms.forEach(function(room){ %>
+              <%- include("room-li", { room: room }) %>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p>No rooms currently available.</p>
+        <% } %>
+      </section>
+      <section class="create-room-container">
+        <p>Create a new room</p>
+        <form action="/room/create" method="post" id="createRoomForm">
+          <input name="roomname" type="text" value="" placeholder="Enter new room name" />
+          <button form="createRoomForm" type="submit">Create!</button>
+        </form>
+      </section>
+      <section class="change-nickname-container">
+        <p>Change nickname</p>
+        <form action="/user/nickname" method="post" id="changeNicknameForm">
+          <input name="nickname" type="text" value="" placeholder="Enter new nickname" />
+          <button form="changeNicknameForm" type="submit">Update!</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
