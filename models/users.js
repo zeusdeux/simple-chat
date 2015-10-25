@@ -1,3 +1,5 @@
+/* eslint no-use-before-define: 0 */
+
 'use strict'
 
 let users  = require('../data/users')
@@ -32,9 +34,9 @@ const _createUserObj = (createdOn, nickname, ...roomIds) => {
 
   roomIds = roomIds.filter(roomId => Rooms.isValid(roomId))
 
-  user.nickname = nickname || 'unknownPerson' + Date.now()
-  user.rooms = roomIds
-  user.createdOn = createdOn || Date.now()
+  user.nickname     = nickname || 'unknownPerson' + Date.now()
+  user.rooms        = roomIds
+  user.createdOn    = createdOn || Date.now()
   user.lastAccessed = user.createdOn
 
   return { id, user }
@@ -52,13 +54,19 @@ const _set = (id, user) => users[id] = user
  * Get user based on id
  */
 
-const _get = (id) => {
+const _get = (id, updateLastAccessed) => {
+  if ('boolean' !== typeof updateLastAccessed) updateLastAccessed = true
+
   const user = users[id]
 
   if (!user) {
     if (util.isProd()) throw new Error('User not found')
     else throw new Error('User for id ' + id + ' not found')
   }
+
+  // update last accessed time of user
+  if (updateLastAccessed) setLastAccessed(id, Date.now())
+
   return user
 }
 
@@ -149,7 +157,7 @@ const removeRoom = (id, roomId) => {
  */
 
 const setLastAccessed = (id, lastAccessedDate) => {
-  const user = _get(id)
+  const user = _get(id, false)
 
   user.lastAccessed = lastAccessedDate || Date.now()
 }
@@ -171,10 +179,15 @@ const getLastAccessed = (id) => {
  */
 
 const create = (createdOn, nickname) => {
-  let userObj        = _createUserObj(createdOn, nickname)
   const existingUser = getUserByNickname(nickname)
+  let userObj
 
-  if (existingUser) return existingUser.id
+  if (existingUser) {
+    setLastAccessed(existingUser.id, Date.now())
+    return existingUser.id
+  }
+
+  userObj = _createUserObj(createdOn, nickname)
 
   _set(userObj.id, userObj.user)
   return userObj.id
@@ -189,7 +202,8 @@ const getUserByNickname = (nickname) => {
   let user = null
 
   Object.keys(users).some(userId => {
-    const u = _get(userId)
+    // false -> don't update last accessed times for user given by userId
+    const u = _get(userId, false)
 
     if (nickname === u.nickname) {
       user = u
@@ -208,7 +222,7 @@ const getUserByNickname = (nickname) => {
 const getAll = () => {
   let allUsers = []
 
-  Object.keys(users).forEach(userId => allUsers.push(_get(userId)))
+  Object.keys(users).forEach(userId => allUsers.push(_get(userId, false)))
 
   return allUsers
 }
@@ -221,11 +235,12 @@ module.exports = {
   getNickname,
   addRoom,
   removeRoom,
-  setLastAccessed,
+  // setLastAccessed,
   getLastAccessed,
   create,
   getAll,
   getUserByNickname
 }
+
 
 const Rooms = require('./rooms')
