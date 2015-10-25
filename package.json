@@ -36,5 +36,16 @@
     "clean-css": "^3.4.6",
     "envify": "^3.4.0",
     "uglify-js": "^2.5.0"
-  }
+  },
+  "bin": {
+    "simple-chat": "restServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeusdeux/simple-chat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zeusdeux/simple-chat/issues"
+  },
+  "homepage": "https://github.com/zeusdeux/simple-chat#readme"
 }

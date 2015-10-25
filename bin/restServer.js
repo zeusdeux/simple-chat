@@ -1,3 +1,5 @@
+#! /usr/bin/env node --harmony_arrow_functions --harmony_rest_parameters
+
 'use strict'
 
 const app  = require('../setupExpress')(require('../routes/restRoutes'))
