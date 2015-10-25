@@ -17,6 +17,7 @@
       </nav>
       <section class="chat-box-container">
         <div class="messages">
+          <h4>Messages</h4>
           <ul>
             <% messages.forEach(function(msg) { %>
               <%- include("msg-li", { msg: msg }) %>
@@ -31,6 +32,7 @@
         </div>
       </section>
       <section class="user-list-container">
+        <h4>People in this room</h4>
         <ul>
           <% users.forEach(function(user) { %>
             <%- include("user-li", { user: user }) %>

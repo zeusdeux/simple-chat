@@ -5,8 +5,9 @@
     Created by <% if (room.createdByYou) { %> You <% } else { %> <%= room.createdBy %><% } %>
   </span>
 
-  <%# TODO: Do the pluralization of person/people properly %>
-  <span class="user-count"><%= room.userCount %> people</span>
+  <span class="user-count">
+    <%= room.userCount %> <% if (room.userCount > 1) { %>people<% } else { %>person<% } %>
+  </span>
 
   <% if (room.createdByYou) { %>
     <span> <a href="/room/<%= room.id %>/delete">delete</a></span>
