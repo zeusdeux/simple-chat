@@ -183,11 +183,11 @@ const create = (name, createdByUserId) => {
 const deleteRoom = (id) => {
   const room = _get(id)
 
-  // remove this room from list of rooms for the users in this room
+  // Remove this room from list of rooms for the users in this room
   room.users.forEach(userId => Users.removeRoom(userId, id))
 
-  // TODO: purge messages
-  // room.messages.forEach(messageId => Messages.deleteMessage(messageId))
+  // Purge messages
+  room.messages.forEach(messageId => Messages.deleteMessage(messageId))
 
   delete rooms[id]
 }
