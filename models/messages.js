@@ -136,5 +136,6 @@ module.exports = {
   deleteMessage
 }
 
-const Users    = require('./users')
-const Rooms    = require('./rooms')
+
+const Users = require('./users')
+const Rooms = require('./rooms')

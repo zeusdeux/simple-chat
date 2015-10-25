@@ -1,7 +1,10 @@
+/* eslint no-use-before-define: 0 */
+
 'use strict'
 
 let rooms  = require('../data/rooms')
 const util = require('../util')
+
 
 /*
  * Schema
@@ -280,6 +283,7 @@ module.exports = {
  * Further reading:
  * 1. Cyclic dep resolution in node: https://nodejs.org/api/modules.html#modules_cycles
  * 2. What do es6 modules exports? http://www.2ality.com/2015/07/es6-module-exports.html
+ *
  */
 
 const Users    = require('./users')

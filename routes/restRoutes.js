@@ -231,7 +231,7 @@ router.get('/room/:id/leave', validateUser, (req, res, next) => {
 
 const deleteRoom = (req, res, next) => {
   try {
-    const roomId = req.params.id
+    const roomId    = req.params.id
     const createdBy = Rooms.getCreatedBy(roomId)
 
     // delete only if user trying to delete had created the room
