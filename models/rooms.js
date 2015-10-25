@@ -1,8 +1,6 @@
 'use strict'
 
-// console.log('starting loading rooms model')
-
-let rooms = require('../data/rooms')
+let rooms  = require('../data/rooms')
 const util = require('../util')
 
 /*
@@ -269,7 +267,20 @@ module.exports = {
   getAll
 }
 
+
+/*
+ * These imports are down here to fight closures and cyclic dependencies
+ *
+ * If these are put on top, then the functions that use Users or Messages
+ * get the incomplete User/Messages export object trapped in their closure.
+ *
+ * This would be an issue if "import" from es6 worked since it imports
+ * immutable bindings and not values like require does.
+ *
+ * Further reading:
+ * 1. Cyclic dep resolution in node: https://nodejs.org/api/modules.html#modules_cycles
+ * 2. What do es6 modules exports? http://www.2ality.com/2015/07/es6-module-exports.html
+ */
+
 const Users    = require('./users')
 const Messages = require('./messages')
-
-// console.log('Rooms loaded', module.exports, Users)

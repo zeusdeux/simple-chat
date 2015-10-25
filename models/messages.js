@@ -1,9 +1,7 @@
 'use strict'
 
-// console.log('starting loading messages model')
-
-const messages = require('../data/messages')
-const util = require('../util')
+let messages = require('../data/messages')
+const util   = require('../util')
 
 /*
  * Schema
@@ -140,6 +138,3 @@ module.exports = {
 
 const Users    = require('./users')
 const Rooms    = require('./rooms')
-
-
-// console.log('Messages loaded', module.exports)

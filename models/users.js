@@ -1,7 +1,5 @@
 'use strict'
 
-// console.log('starting loading users model')
-
 let users  = require('../data/users')
 const util = require('../util')
 
@@ -227,6 +225,3 @@ module.exports = {
 }
 
 const Rooms = require('./rooms')
-
-
-// console.log('Users loaded', module.exports)
