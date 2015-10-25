@@ -5,6 +5,7 @@ const logger     = require('morgan')
 const express    = require('express')
 const bodyParser = require('body-parser')
 const session    = require('express-session')
+const util       = require('./util')
 
 const app        = express()
 
@@ -61,8 +62,6 @@ app.use(express.static(path.join(__dirname, 'public')))
  */
 
 module.exports = (routes) => {
-  const env = app.get('env')
-
   // mount app routes to /
   app.use('/', routes)
 
@@ -75,7 +74,7 @@ module.exports = (routes) => {
   })
 
   // setup prod and dev error handler
-  if ('production' === env || 'prod' === env) {
+  if (util.isProd()) {
     app.use((err, req, res, _) => {
       res.status(err.status || 500)
       if (req.xhr) res.send()
