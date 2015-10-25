@@ -4,11 +4,10 @@
     <meta charset="UTF-8"/>
     <title>Simple-chat: Error</title>
     <link href="/css/style.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
   </head>
   <body>
     <section class="error-container">
-      <h3 class="error-message"><%= message %></h3>
+      <h3 class="error-message"><%= status %>: <%= message %></h3>
       <% if(stack) { %>
         <code><%- stack %></code>
       <%  } %>

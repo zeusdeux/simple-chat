@@ -81,6 +81,7 @@ module.exports = (routes) => {
       if (req.xhr) res.send()
       else {
         res.render('error', {
+          status: err.status || 500,
           message: 'Something went wrong! :(',
           stack: null // don't leak stacktrace to user in prod
         })
@@ -93,6 +94,7 @@ module.exports = (routes) => {
       if (req.xhr) res.send()
       else {
         res.render('error', {
+          status: err.status || 500,
           message: err.message || 'Broken bruv! :|',
           stack: err.stack.split('\n').join('<br />')
         })
